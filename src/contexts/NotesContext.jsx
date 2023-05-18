@@ -1,4 +1,5 @@
-import { createContext, useContext, useReducer } from "react"
+import { createContext, useContext, useEffect, useReducer } from "react"
+import { useLocalStorage } from "react-use";
 
 const initialNotesData = [
     {
@@ -11,6 +12,10 @@ const initialNotesData = [
     }
 ]
 
+// Runs automatically when a dispatch function is called. 
+// instructions.type determines how we edit the state.
+// Whatever is returned is the new state, otherwise state is set to null if nothing is returned.
+// @returns New state, edited based on instructions provided. 
 const notesReducer = (previousState, instructions) => {
     let stateEditable = [...previousState];
 
@@ -39,19 +44,52 @@ const notesReducer = (previousState, instructions) => {
     }
 }
 
+// This is how we make our reducer state and reducer dispatch global
 export const NoteDataContext = createContext(null);
 export const NoteDispatchContext = createContext(null);
 
+// custom hooks that provide direct access to one part of the reducer. E.g. read-only data.
 export function useNoteData(){
     return useContext(NoteDataContext);
 }
 
+// function to modify the data.
 export function useNoteDispatch(){
     return useContext(NoteDispatchContext);
 }
 
+/**
+ * NotesProvider wraps around the component tree. 
+ * Any child component has access to this note data via useNoteData and useNoteDispatch.
+ * @param {*} props props.children should be a JSX element. The NotesProvider wraps around that element. 
+ * 
+ */
+
 export default function NotesProvider(props){
+    // [readOnlyData, functionToModifyData] = useReducer(reducerFunction, initialDefaultData);
     const [notesData, notesDispatch] = useReducer(notesReducer, initialNotesData);
+
+    // [readOnlyLocalStorageData, functionToUpdateLocalStorage] = useLocalStorage(keyInLocalStorage, defaultDataIfKeyNotFound)
+    const [persistentData, setPersistentData] = useLocalStorage('notes', initialNotesData);
+
+
+    useEffect(() => {
+        // TODO: On app start, overwrite notesData with persistentData.
+        // notesDispatch()
+    }, []);
+
+
+        // Dev: confirm that our local storage is updating. 
+    useEffect(() => {
+        console.log("Local storage " + persistentData)
+        if (notesData.length == 1){
+        }
+    }, [persistentData]);
+
+        // Autosave any changes to notes from reducer state into localstorage
+    useEffect(() => {
+        setPersistentData(notesData);
+    }, [notesData])
 
     return(
         <NoteDataContext.Provider value = {notesData}>
