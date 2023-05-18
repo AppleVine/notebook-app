@@ -96,11 +96,13 @@ export default function NotesProvider(props){
         // Dev: confirm that our local storage is updating. 
     useEffect(() => {
         console.log("Local storage " + persistentData)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [persistentData]);
 
         // Autosave any changes to notes from reducer state into localstorage
     useEffect(() => {
         setPersistentData(notesData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [notesData])
 
     return(
