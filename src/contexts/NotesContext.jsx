@@ -88,14 +88,14 @@ export default function NotesProvider(props){
     useEffect(() => {
         // On app start, overwrite notesData with persistentData.
         notesDispatch({type: "setup", data: persistentData})
+        // the next comment disables an error when making this hook wanting it to require a dependency when you don't want it to overwrite on startup. 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
         // Dev: confirm that our local storage is updating. 
     useEffect(() => {
         console.log("Local storage " + persistentData)
-        if (notesData.length == 1){
-        }
     }, [persistentData]);
 
         // Autosave any changes to notes from reducer state into localstorage
