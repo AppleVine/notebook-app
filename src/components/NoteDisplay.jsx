@@ -23,6 +23,16 @@ export default function NoteDisplay(props){
 
     return(
         <div>
+
+            {/* 
+            - ID (number)
+            - title (string)
+            - description (string)
+            - isComplete (boolean)
+            - due date (JS date)
+            - created at date (JS date)          
+            */}
+
             <h4>{localNote.title}</h4>
             <p>{localNote.description}</p>
             <p>{localNote.isCompleted ? "COMPLETE" : "NOT YET DONE"}</p>

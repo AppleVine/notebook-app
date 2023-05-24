@@ -1,4 +1,6 @@
-import NoteDisplay from "../components/NoteDisplay";
+// import NoteDisplay from "../components/NoteDisplay";
+import NoteForm from "../components/NoteForm";
+import NoteParent from "../components/NoteParent";
 import { useNoteData } from "../contexts/NotesContext"
 
 export default function Homepage(props){
@@ -14,6 +16,8 @@ export default function Homepage(props){
                 <h3>We have {globalNotesData.length} notes in storage!</h3>
 
             {/* Note form component */}
+            <h3>Create a new note:</h3>
+            <NoteForm />
 
             {/* List of all notes  */}
                 <h3>List of all notes:</h3>
@@ -21,7 +25,8 @@ export default function Homepage(props){
 
                     return(
                         <div key={note.id}>
-                            <NoteDisplay id={note.id} />
+                            {/* <NoteDisplay id={note.id} /> */}
+                            <NoteParent id={note.id}/>
                         </div>
                             
                     )
