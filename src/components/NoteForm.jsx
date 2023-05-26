@@ -1,16 +1,6 @@
-
-
-            /* 
-            - ID (number)
-            - title (string)
-            - description (string)
-            - isComplete (boolean)
-            - due date (JS date)
-            - created at date (JS date)          
-            */
-
 import { useEffect, useState } from "react";
 import { useNoteData, useNoteDispatch } from "../contexts/NotesContext";
+import Button from "react-bootstrap/Button";
 
 export default function NoteForm(props){
 
@@ -90,9 +80,14 @@ export default function NoteForm(props){
                 {/* This will be handled by the reducer, not the human. */}
 
             </form>
-            <button onClick={saveNoteToGlobal}>Save Note</button>
+            <Button variant="primary" onClick={saveNoteToGlobal}>
+                Save Note
+            </Button>
         </div>
 
     )
 
 }
+
+
+// 2:18 on sat video
